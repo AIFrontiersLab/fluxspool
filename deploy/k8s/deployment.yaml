@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tokenizer-design-lab
+  namespace: tokenizer-design-lab
+  labels: {app.kubernetes.io/name: tokenizer-design-lab}
+spec:
+  replicas: 2
+  selector:
+    matchLabels: {app.kubernetes.io/name: tokenizer-design-lab}
+  template:
+    metadata:
+      labels: {app.kubernetes.io/name: tokenizer-design-lab}
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+    spec:
+      securityContext: {runAsNonRoot: true, runAsUser: 10001}
+      containers:
+        - name: app
+          image: tokenizer-design-lab:0.1.0
+          ports: [{containerPort: 8080}]
+          env:
+            - {name: TOKENIZER_DESIGN_LAB_CONFIG, value: /config/production.toml}
+          readinessProbe: {httpGet: {path: /readyz, port: 8080}, periodSeconds: 10}
+          livenessProbe: {httpGet: {path: /healthz, port: 8080}, periodSeconds: 15}
+          resources:
+            requests: {cpu: 250m, memory: 256Mi}
+            limits: {cpu: "1", memory: 512Mi}
+          securityContext: {readOnlyRootFilesystem: true, allowPrivilegeEscalation: false}
+          volumeMounts:
+            - {name: config, mountPath: /config}
+            - {name: data, mountPath: /app/var}
+      volumes:
+        - {name: config, configMap: {name: tokenizer-design-lab-config}}
+        - {name: data, emptyDir: {}}

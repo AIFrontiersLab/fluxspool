@@ -1,0 +1,14 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: tokenizer-design-lab-ingress
+  namespace: tokenizer-design-lab
+spec:
+  podSelector:
+    matchLabels: {app.kubernetes.io/name: tokenizer-design-lab}
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels: {kubernetes.io/metadata.name: gateway}
+      ports: [{port: 8080}]

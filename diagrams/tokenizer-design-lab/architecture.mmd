@@ -1,0 +1,22 @@
+flowchart LR
+  b1["Data Preprocessor"]
+  b2["BPE Trainer"]
+  b3["Vocabulary Manager"]
+  b4["Encoder/Decoder"]
+  b1 -->|Preprocessed Data| b2
+  b2 -->|Trained Vocabulary| b3
+  b3 -->|Managed Vocabulary| b4
+  b4 -->|Encoded/Decoded Tokens| b1
+
+flowchart TB
+  subgraph happy [Happy path]
+    h_b1["Data Preprocessor"]
+    h_b2["BPE Trainer"]
+    h_b3["Vocabulary Manager"]
+    h_b4["Encoder/Decoder"]
+    h_b1 --> h_b2
+    h_b2 --> h_b3
+    h_b3 --> h_b4
+  end
+  fail["Failure / abstain"]
+  h_b4 -.-> fail

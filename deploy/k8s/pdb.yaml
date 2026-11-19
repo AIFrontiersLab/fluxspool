@@ -1,0 +1,9 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: tokenizer-design-lab
+  namespace: tokenizer-design-lab
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels: {app.kubernetes.io/name: tokenizer-design-lab}

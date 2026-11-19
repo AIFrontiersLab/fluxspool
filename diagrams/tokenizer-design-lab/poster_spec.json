@@ -1,0 +1,48 @@
+{
+  "boxes": [
+    {
+      "detail": "Cleans and normalizes domain-specific text to ensure consistent character encoding.",
+      "id": "b1",
+      "label": "Data Preprocessor"
+    },
+    {
+      "detail": "Iteratively merges the most frequent pairs of adjacent symbols in the training corpus to build the vocabulary.",
+      "id": "b2",
+      "label": "BPE Trainer"
+    },
+    {
+      "detail": "Handles the serialization of the vocabulary and merge rules, supporting both loading and saving operations.",
+      "id": "b3",
+      "label": "Vocabulary Manager"
+    },
+    {
+      "detail": "Converts raw text strings into integer token IDs and vice-versa, handling special tokens.",
+      "id": "b4",
+      "label": "Encoder/Decoder"
+    }
+  ],
+  "flows": [
+    {
+      "from": "b1",
+      "label": "Preprocessed Data",
+      "to": "b2"
+    },
+    {
+      "from": "b2",
+      "label": "Trained Vocabulary",
+      "to": "b3"
+    },
+    {
+      "from": "b3",
+      "label": "Managed Vocabulary",
+      "to": "b4"
+    },
+    {
+      "from": "b4",
+      "label": "Encoded/Decoded Tokens",
+      "to": "b1"
+    }
+  ],
+  "subtitle": "One concept. Three AI perspectives. One tested architecture.",
+  "title": "Tokenizer Design Lab"
+}

@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: tokenizer-design-lab
+  namespace: tokenizer-design-lab
+spec:
+  selector: {app.kubernetes.io/name: tokenizer-design-lab}
+  ports: [{port: 80, targetPort: 8080}]
